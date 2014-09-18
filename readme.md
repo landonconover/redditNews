@@ -30,4 +30,6 @@ Install nodemon, if needed.
 
 Then start the server:
 
-    nodemon start
+    nodemon server.js
+    
+Then open a web browser to http://localhost:8080/ to see magic.
