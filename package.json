@@ -1,0 +1,14 @@
+{
+  "name": "recipeTracker",
+  "version": "1.0.0",
+  "description": "An app that can be used to track recipies and meal planning.",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.7.1"
+  }
+}
