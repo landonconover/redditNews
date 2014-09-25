@@ -27,6 +27,13 @@ router.get('/', function(req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });	
 });
 
+router.get('/moreData', function(req, res) {
+	res.json({ message: 'Here is more data' });	
+});
+
+router.get('/moreData2', function(req, res) {
+	res.json({ message: 'Here is more data2' });	
+});
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
