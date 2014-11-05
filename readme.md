@@ -1,16 +1,16 @@
-#Recipe Tracker App
-Our super cool app that is used as a group project for DGM RIA (Rich Internet Apps)
+#Reddit News
+My super cool app that is used as a personal project for DGM RIA (Rich Internet Apps)
 
 ##Summary
 [Summary goes here]
 
 ##Technologies Used
-For this project we will be using a modifided MEAN stack.
-We have decided aginst using the express router to serve the front end for the sake of simplicity. Therfore, the project serves the front end staticly from the /app folder. However, the data API will use the new express 4 routing options to provide RESTful endpoint used for data manipulation.
+For this project I will be using a modifided MEAN stack.
+I have decided aginst using the express router to serve the front end for the sake of simplicity. Therfore, the project serves the front end staticly from the /app folder. However, the data API will use the new express 4 routing options to provide RESTful endpoint used for data manipulation. If needed.
 ###Frontend
-The frontend will be using Angular.js and Bootstrap and will be the focus of this project.
+The frontend will be using Angular.js and Bootstrap.
 ###Backend
-The back end will be using Node with the Express framework to serve static files, and provide back end API. The backend will also use MongoDB with Mongoose for data object modeling. 
+The back end will be using Node with the Express framework to serve static files, and provide back end API. The backend will also use MongoDB with Mongoose for data object modeling. If needed. 
 
 ##Getting Started
 Node is required.
