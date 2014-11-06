@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Reddit View</title>
+    <title>Reddit News</title>
 
     <!-- Bootstrap core CSS -->
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,11 +17,25 @@
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
 
+    <style type="text/css">
+      .item { width: 25%; border: 1px solid black; overflow: hidden;}
+      .item.r-w2 { width:  50%; }
+      .item.r-w3 { width:  75%; }
+      
+      .item.r-h1 { height: 160px; }
+      .item.r-h2 { height: 320px; }
+      .item.r-h3 { height: 640px; }
+
+
+    </style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/moment/moment.js"></script>
     <script src="lib/angular-moment/angular-moment.min.js"></script>
     <script src="js/app.js"></script>
+
+    <script src="lib/packery/dist/packery.pkgd.min.js"></script>
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -31,7 +45,7 @@
     <![endif]-->
   </head>
 
-  <body ng-app="reddit">
+  <body ng-app="reddit" ng-controller="RedditController as reddit">
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -42,7 +56,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Reddit View</a>
+          <a class="navbar-brand" href="#">Reddit News</a>
         </div>
         
       </div>
@@ -50,21 +64,22 @@
 
     
 
-    <div class="container" ng-controller="RedditController as reddit">
+    <div class="container"  id="container" >
 
-      <div class="row redditRow" ng-repeat="obj in reddit.objs">
+      <div  ng-repeat="obj in reddit.objs" news-pack='layoutDone()'>
 
-        <div class="col-md-1 redditCount">
+        <!-- <div class="col-md-1 redditCount">
          <h4 class="text-center">{{$index + 1}}</h4>
         </div>
-
-        <div class="col-md-11">
+ -->
+        {{reddit.randomClass()}}
+        <div ng-class="">
           <div class="media" >
             <a class="pull-left" href="#">
               <img class="media-object img-thumbnail thumbNail" ng-show="obj.data.thumbnail" ng-srcset="{{obj.data.thumbnail}}" alt="Kitty">
             </a>
-            <div class="media-body">
-              <h4 class="media-heading" ><a ng-href="{{obj.data.url}}">{{obj.data.title}}</a></h4>
+            <div class="">
+              <h4 class="" ><a ng-href="{{obj.data.url}}">{{obj.data.title}}</a></h4>
               <span am-time-ago="obj.data.created" am-preprocess="unix"></span>
               <p>{{obj.data.selftext | cut:true:100}}</p>
             </div>
@@ -74,13 +89,12 @@
 
       </div>
 
-      <hr>
 
 
 
-      <footer>
+      <!-- <footer>
         <p>&copy; Company 2014</p>
-      </footer>
+      </footer> -->
     </div> <!-- /container -->
 
 
