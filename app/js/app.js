@@ -44,26 +44,50 @@
 		    console.log(d);
 		  });
 
-		this.displayClass = function(title){
+		this.displayClass = function(title, ups, selfText){
 			var myClass = "myItem";
 			// console.log(title);
 
 			title = title.replace(/(^\s*)|(\s*$)/gi,"");
 			title = title.replace(/[ ]{2,}/gi," ");
+			title = title.replace(/\n /,"\n");
+
+			selfText = selfText.replace(/(^\s*)|(\s*$)/gi,"");
+			selfText = selfText.replace(/[ ]{2,}/gi," ");
+			selfText = selfText.replace(/\n /,"\n");
 
 			var titleLength = title.split(' ').length;
+			var selfTextLength = selfText.split(' ').length;
 
-			// console.log(titleLength);
+			console.log('______________________');
+			console.log(selfText);
+			console.log(selfTextLength);
 
-			if (titleLength > 10) {
+			// if (titleLength > 10) {
+			// 	myClass += " w-2";
+			// };
+
+			// if (titleLength > 20) {
+			// 	myClass += " h-2";
+			// };
+
+			if (ups > 3000) {
 				myClass += " w-2";
 			};
 
-			if (titleLength > 20) {
+			if (ups > 4000) {
 				myClass += " h-2";
 			};
 
-			// console.log(myClass);
+			if (selfTextLength > 20) {
+				myClass += " h-2";
+			};
+
+			if (selfTextLength > 50) {
+				myClass += " w-2";
+			};
+
+			console.log(myClass);
 
 			return myClass;
 		}
