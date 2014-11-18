@@ -7,21 +7,145 @@
 	*/
 	angular.module('reddit', ['angularMoment']);
 
-	app.controller('RedditController', ['$http', function($http){
+	app.factory('getRedditData', ['$http', function($http) {
+
+		return {
+		    frontPage: function() {
+		      return $http.get('http://www.reddit.com/.json');  //1. this returns promise
+		    }
+		  };
+
+		// var myService = {
+		//     frontPage: function() {
+		//       // $http returns a promise, which has a then function, which also returns a promise
+		//       var promise = $http.get('http://www.reddit.com/.json').then(function (response) {
+		//         // The then function here is an opportunity to modify the response
+		//         console.log(response);
+		//         console.log(response.data.data.children);
+		//         // The return value gets picked up by the then in the controller.
+		//         return response.data.data.children;
+		//       });
+		//       // Return the promise to the controller
+		//       return promise;
+		//     }
+		//   };
+		//   return myService;
+
+
+  }]);
+
+	app.controller('RedditController', ['$http', '$scope', '$timeout', 'getRedditData', function($http, $scope, $timeout, getRedditData){
 		var redditData = this;
 
-		redditData.objs = [];
 
-		// this.objs = myData;
+		getRedditData.frontPage().then(function(d) {
+		    redditData.myData = d.data.data.children;
+		    console.log('THIS IS FROM THE SERVICE');
+		    console.log(d);
+		  });
 
-		$http.get('http://www.reddit.com/.json').success(function (data) {
-			console.log(data);
-			console.log(data.data.children[1].data.created);
-			redditData.objs = data.data.children;
-		});
+		this.displayClass = function(title, ups, selfText){
+			var myClass = "myItem";
+			// console.log(title);
+
+			title = title.replace(/(^\s*)|(\s*$)/gi,"");
+			title = title.replace(/[ ]{2,}/gi," ");
+			title = title.replace(/\n /,"\n");
+
+			selfText = selfText.replace(/(^\s*)|(\s*$)/gi,"");
+			selfText = selfText.replace(/[ ]{2,}/gi," ");
+			selfText = selfText.replace(/\n /,"\n");
+
+			var titleLength = title.split(' ').length;
+			var selfTextLength = selfText.split(' ').length;
+
+			console.log('______________________');
+			console.log(selfText);
+			console.log(selfTextLength);
+
+			// if (titleLength > 10) {
+			// 	myClass += " w-2";
+			// };
+
+			// if (titleLength > 20) {
+			// 	myClass += " h-2";
+			// };
+
+			if (ups > 3000) {
+				myClass += " w-2";
+			};
+
+			if (ups > 4000) {
+				myClass += " h-2";
+			};
+
+			if (selfTextLength > 20) {
+				myClass += " h-2";
+			};
+
+			if (selfTextLength > 50) {
+				myClass += " w-2";
+			};
+
+			console.log(myClass);
+
+			return myClass;
+		}
 
 
-	}]);
+		 $scope.layoutDone = function() {
+            // $('a[data-toggle="tooltip"]').tooltip(); // NOT CORRECT!
+
+            $timeout(function() { 
+
+            	var container = document.querySelector('#gridContainer');
+            	
+            	var pckry = new Packery( container, {
+            	  // options
+            	  itemSelector: '.myItem'
+            	});
+			}, 0); // wait...
+
+        };
+
+        // this.myCount = 0;
+
+        // this.randomClass = function (numberOfRandom) {
+
+        // 	var widthNames = ['r-w1', 'r-w2', 'r-w3'];
+        // 	var heightNames = ['r-h1', 'r-h2', 'r-h3'];
+
+        // 	var randomWidthKey = Math.floor(Math.random()*widthNames.length);
+        // 	var randomHeightKey = Math.floor(Math.random()*heightNames.length);
+
+
+        // 	var randomNum = Math.floor(Math.random() * (3 - 0)) + 0;
+
+        // 	var myNum = 0;
+
+        // 	this.myCount++;
+
+        // 	var randomClass1 = "item " + widthNames[randomNum] + " " + heightNames[randomNum];
+
+        // 	console.log(this.myCount);
+        // 	console.log(randomClass1);
+        	
+        // 	// return "item r-h1 r-w1";
+        // 	return randomClass1;
+
+        // }
+
+	}]); //end controller
+
+	app.directive('newsPack', function() {
+	    return function(scope, element, attrs) {
+
+
+            if (scope.$last) { // all are rendered
+                scope.$eval(attrs.newsPack);
+            }
+        };
+	}); 
 
 	angular.module('ng').filter('cut', function () {
         return function (value, wordwise, max, tail) {
@@ -42,34 +166,6 @@
             return value + (tail || ' …');
         };
     });
-
-	var myData = [
-			{
-				name: "Landon",
-				awesomeness: 5
-			},
-			{
-				name: "Landon",
-				awesomeness: 5
-			},
-			{
-				name: "Landon",
-				awesomeness: 5
-			},
-			{
-				name: "Landon",
-				awesomeness: 5
-			},
-			{
-				name: "Landon",
-				awesomeness: 5
-			},
-			{
-				name: "Landon",
-				awesomeness: 5
-			}
-		];
-
 	
 
 })();

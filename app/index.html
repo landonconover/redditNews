@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Reddit View</title>
+    <title>Reddit News</title>
 
     <!-- Bootstrap core CSS -->
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,11 +17,86 @@
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
 
+    <style type="text/css">
+/*      .item { width: 25%; border: 1px solid black; overflow: hidden;}
+      .item.r-w2 { width:  50%; }
+      .item.r-w3 { width:  75%; }
+      
+      .item.r-h1 { height: 160px; }
+      .item.r-h2 { height: 320px; }
+      .item.r-h3 { height: 640px; }
+
+      #gridContainer .grid-sizer,
+      #gridContainer .item {
+        width: 20%;
+      }*/
+
+      * {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body { font-family: sans-serif; }
+
+.packery {
+/*  background: #FDD;
+  background: hsla(45, 100%, 40%, 0.2);*/
+  
+}
+
+/* clearfix */
+.packery:after {
+  content: ' ';
+  display: block;
+  clear: both;
+}
+
+.myItem,
+.grid-sizer {
+  width: 20%;
+  height: 150px;
+}
+
+.myItem {
+  /*height: 150px;*/
+  float: left;
+  /*background: #C09;*/
+  border: 5px solid #333;
+  border-color: hsla(0, 0%, 0%, 0.3);
+  padding: 5px;
+  overflow: hidden;
+  position: relative;
+
+ 
+}
+
+.myItem.w-2 { width:  40%; /*background: #9C0;*/ }
+.myItem.h-2 { height: 300px; /*background: #0C9;*/ }
+.myItem.h-4 { height: 600px; /*background: #C90;*/ }
+.myItem.w-4 { width:  80%; /*background: #90C;*/ }
+
+.bottom_fade {
+  width:100%;
+  height: 50px;
+  z-index: 99;
+  position: absolute;
+  bottom: 0;
+  background: url("img/bottom-fade.png");
+  background-repeat: repeat-x;
+}
+
+
+
+    </style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/moment/moment.js"></script>
     <script src="lib/angular-moment/angular-moment.min.js"></script>
     <script src="js/app.js"></script>
+
+    <script src="lib/packery/dist/packery.pkgd.min.js"></script>
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -31,10 +106,10 @@
     <![endif]-->
   </head>
 
-  <body ng-app="reddit">
+  <body ng-app="reddit" ng-controller="RedditController as reddit">
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
+      <!-- <div class="container"> -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -42,51 +117,72 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Reddit View</a>
+          <a class="navbar-brand" href="#">Reddit News</a>
         </div>
         
-      </div>
+      <!-- </div> -->
     </div>
+
+
+<!--   <div class="packery js-packery" data-packery-options='{ "columnWidth": ".grid-sizer", "itemSelector": ".myItem" }'>
+    <div class="grid-sizer"></div>
+    <div class="myItem"></div>
+    <div class="myItem w-2"></div>
+    <div class="myItem"></div>
+    <div class="myItem"></div>
+    <div class="myItem h-2"></div>
+    <div class="myItem"></div>
+    <div class="myItem w-2"></div>
+    <div class="myItem h-2"></div>
+    <div class="myItem"></div>
+    <div class="myItem h-2"></div>
+    <div class="myItem"></div>
+    <div class="myItem w-2"></div>
+    <div class="myItem"></div>
+    <div class="myItem"></div>
+    <div class="myItem h-2"></div>
+    <div class="myItem"></div>
+    <div class="myItem"></div>
+    <div class="myItem h-2"></div>
+    <div class="myItem"></div>
+    <div class="myItem w-2"></div>
+  </div> -->
 
     
 
-    <div class="container" ng-controller="RedditController as reddit">
+    <div class="packery js-packery" id="gridContainer" data-packery-options='{ "columnWidth": ".grid-sizer", "rowHeight": ".grid-sizer", "itemSelector": ".myItem" }'>
+    
 
-      <div class="row redditRow" ng-repeat="obj in reddit.objs">
+      <div  ng-repeat="obj in reddit.myData" news-pack='layoutDone()'>
 
-        <div class="col-md-1 redditCount">
+        <!-- <div class="col-md-1 redditCount">
          <h4 class="text-center">{{$index + 1}}</h4>
-        </div>
+        </div> -->
 
-        <div class="col-md-11">
+
+        <div ng-class="reddit.displayClass(obj.data.title, obj.data.ups, obj.data.selftext)" >
           <div class="media" >
-            <a class="pull-left" href="#">
+            <a class="pull-left" ng-href="{{obj.data.url}}">
               <img class="media-object img-thumbnail thumbNail" ng-show="obj.data.thumbnail" ng-srcset="{{obj.data.thumbnail}}" alt="Kitty">
             </a>
-            <div class="media-body">
-              <h4 class="media-heading" ><a ng-href="{{obj.data.url}}">{{obj.data.title}}</a></h4>
+            <div class="">
+              <h4 class="" ><a target="_blank" ng-href="{{obj.data.url}}">{{obj.data.title}} - {{obj.data.ups}}</a></h4>
               <span am-time-ago="obj.data.created" am-preprocess="unix"></span>
-              <p>{{obj.data.selftext | cut:true:100}}</p>
+              <p>{{obj.data.selftext}}</p>
+              
             </div>
           </div>
+           <div class="bottom_fade"></div>
         </div>
 
-
+       
       </div>
 
-      <hr>
+<div class="grid-sizer"></div>
 
 
+    </div> 
 
-      <footer>
-        <p>&copy; Company 2014</p>
-      </footer>
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     
 
   </body>
