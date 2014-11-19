@@ -108,32 +108,6 @@
 
         };
 
-        // this.myCount = 0;
-
-        // this.randomClass = function (numberOfRandom) {
-
-        // 	var widthNames = ['r-w1', 'r-w2', 'r-w3'];
-        // 	var heightNames = ['r-h1', 'r-h2', 'r-h3'];
-
-        // 	var randomWidthKey = Math.floor(Math.random()*widthNames.length);
-        // 	var randomHeightKey = Math.floor(Math.random()*heightNames.length);
-
-
-        // 	var randomNum = Math.floor(Math.random() * (3 - 0)) + 0;
-
-        // 	var myNum = 0;
-
-        // 	this.myCount++;
-
-        // 	var randomClass1 = "item " + widthNames[randomNum] + " " + heightNames[randomNum];
-
-        // 	console.log(this.myCount);
-        // 	console.log(randomClass1);
-        	
-        // 	// return "item r-h1 r-w1";
-        // 	return randomClass1;
-
-        // }
 
 	}]); //end controller
 
