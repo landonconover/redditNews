@@ -11,7 +11,7 @@
 
 		return {
 		    frontPage: function() {
-		      return $http.get('http://www.reddit.com/.json');  //1. this returns promise
+		      return $http.get('http://www.reddit.com/.json?limit=100&after=t3_10omtd/');  //1. this returns promise
 		    }
 		  };
 
