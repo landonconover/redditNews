@@ -10,8 +10,13 @@
 	app.factory('getRedditData', ['$http', function($http) {
 
 		return {
-		    frontPage: function() {
-		      return $http.get('http://www.reddit.com/.json?limit=100&after=t3_10omtd/');  //1. this returns promise
+		    frontPage: function(limit, after) {
+
+		    	var getURL = 'http://www.reddit.com/.json?limit='+limit;
+		    	//get posts afer a post id. Found at data.after
+		    	getURL = after ? getURL = getURL + '&after=' + after : getURL;
+
+		      return $http.get(getURL);  //1. this returns promise
 		    }
 		  };
 
@@ -38,7 +43,7 @@
 		var redditData = this;
 
 
-		getRedditData.frontPage().then(function(d) {
+		getRedditData.frontPage('2', 't3_2mz9pr').then(function(d) {
 		    redditData.myData = d.data.data.children;
 		    console.log('THIS IS FROM THE SERVICE');
 		    console.log(d);
