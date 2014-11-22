@@ -13,7 +13,7 @@
 		    frontPage: function(limit, after) {
 
 		    	var getURL = 'http://www.reddit.com/.json?limit='+limit;
-		    	//get posts afer a post id. Found at data.after
+		    	//get posts afer a post id. Found at data.after IF after is set.
 		    	getURL = after ? getURL = getURL + '&after=' + after : getURL;
 
 		      return $http.get(getURL);  //1. this returns promise
@@ -40,16 +40,27 @@
   }]);
 
 	app.controller('RedditController', ['$http', '$scope', '$timeout', 'getRedditData', function($http, $scope, $timeout, getRedditData){
-		var redditData = this;
+		// var redditData = this;
+
+		$scope.getNextPosts = function(){
+
+			console.log("this is awesome");
+		};
 
 
-		getRedditData.frontPage('2', 't3_2mz9pr').then(function(d) {
-		    redditData.myData = d.data.data.children;
+		getRedditData.frontPage('2').then(function(d) {
+		    $scope.redditData = d.data.data.children;
 		    console.log('THIS IS FROM THE SERVICE');
 		    console.log(d);
+
+		    $scope.lastItemId = d.data.data.after;
 		  });
 
-		this.displayClass = function(title, ups, selfText){
+
+
+		$scope.displayClass = function(title, ups, selfText){
+
+			console.log("FOR SOME REASON I RUN WITH THE BUTTON");
 			var myClass = "myItem";
 			// console.log(title);
 
@@ -64,9 +75,9 @@
 			var titleLength = title.split(' ').length;
 			var selfTextLength = selfText.split(' ').length;
 
-			console.log('______________________');
-			console.log(selfText);
-			console.log(selfTextLength);
+			// console.log('______________________');
+			// console.log(selfText);
+			// console.log(selfTextLength);
 
 			// if (titleLength > 10) {
 			// 	myClass += " w-2";
@@ -92,10 +103,13 @@
 				myClass += " w-2";
 			};
 
-			console.log(myClass);
+			// console.log(myClass);
 
 			return myClass;
+
 		}
+
+
 
 
 		 $scope.layoutDone = function() {
@@ -125,6 +139,26 @@
             }
         };
 	}); 
+
+	app.directive('applyClass', function() {
+  	    return function(scope, element, attrs) {
+  	    	//the data comes in as a string
+  	    	console.log(attrs.applyClass);
+
+  	    	//This feels wrong...
+  	    	//we then use angulars eval to make it an object... eww.
+  	    	//Hope there is a better way to do this.
+  	    	var myData = scope.$eval(attrs.applyClass);
+
+  	    	console.log(myData);
+
+  	    	//if this is the way I am going to go, here is where all the logic would go
+  	    	//use jqlite to do add classes to this element
+  	    	//element.addclass('class')
+
+              
+          };
+	});
 
 	angular.module('ng').filter('cut', function () {
         return function (value, wordwise, max, tail) {
