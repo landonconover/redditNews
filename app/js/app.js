@@ -48,69 +48,13 @@
 		};
 
 
-		getRedditData.frontPage('2').then(function(d) {
+		getRedditData.frontPage('100').then(function(d) {
 		    $scope.redditData = d.data.data.children;
 		    console.log('THIS IS FROM THE SERVICE');
 		    console.log(d);
 
 		    $scope.lastItemId = d.data.data.after;
 		  });
-
-
-
-		$scope.displayClass = function(title, ups, selfText){
-
-			console.log("FOR SOME REASON I RUN WITH THE BUTTON");
-			var myClass = "myItem";
-			// console.log(title);
-
-			title = title.replace(/(^\s*)|(\s*$)/gi,"");
-			title = title.replace(/[ ]{2,}/gi," ");
-			title = title.replace(/\n /,"\n");
-
-			selfText = selfText.replace(/(^\s*)|(\s*$)/gi,"");
-			selfText = selfText.replace(/[ ]{2,}/gi," ");
-			selfText = selfText.replace(/\n /,"\n");
-
-			var titleLength = title.split(' ').length;
-			var selfTextLength = selfText.split(' ').length;
-
-			// console.log('______________________');
-			// console.log(selfText);
-			// console.log(selfTextLength);
-
-			// if (titleLength > 10) {
-			// 	myClass += " w-2";
-			// };
-
-			// if (titleLength > 20) {
-			// 	myClass += " h-2";
-			// };
-
-			if (ups > 3000) {
-				myClass += " w-2";
-			};
-
-			if (ups > 4000) {
-				myClass += " h-2";
-			};
-
-			if (selfTextLength > 20) {
-				myClass += " h-2";
-			};
-
-			if (selfTextLength > 50) {
-				myClass += " w-2";
-			};
-
-			// console.log(myClass);
-
-			return myClass;
-
-		}
-
-
-
 
 		 $scope.layoutDone = function() {
             // $('a[data-toggle="tooltip"]').tooltip(); // NOT CORRECT!
@@ -140,24 +84,53 @@
         };
 	}); 
 
+	//this directive sets the class based on info about the post
 	app.directive('applyClass', function() {
   	    return function(scope, element, attrs) {
-  	    	//the data comes in as a string
-  	    	console.log(attrs.applyClass);
 
-  	    	//This feels wrong...
-  	    	//we then use angulars eval to make it an object... eww.
-  	    	//Hope there is a better way to do this.
-  	    	var myData = scope.$eval(attrs.applyClass);
+  	    	//data is set as an attr on the element
+  	    	var title = attrs.title;
+  	    	var ups = attrs.ups;
+  	    	var selfText = attrs.selfText;
 
-  	    	console.log(myData);
+  	    	//get rid of the gruff
+  	    	title = title.replace(/(^\s*)|(\s*$)/gi,"");
+			title = title.replace(/[ ]{2,}/gi," ");
+			title = title.replace(/\n /,"\n");
+			var titleLength = title.split(' ').length;
 
-  	    	//if this is the way I am going to go, here is where all the logic would go
-  	    	//use jqlite to do add classes to this element
-  	    	//element.addclass('class')
+			if (selfText) {
+				selfText = selfText.replace(/(^\s*)|(\s*$)/gi,"");
+				selfText = selfText.replace(/[ ]{2,}/gi," ");
+				selfText = selfText.replace(/\n /,"\n");
+				var selfTextLength = selfText.split(' ').length;
+			};
 
-              
-          };
+			//Add classes to make the divs bigger based on if they are popular or have long titles or long selfTexts
+  	    	if (ups > 3000) {
+				element.addClass('w-2'); 
+			};
+
+			if (ups > 4000) {
+				element.addClass('h-2'); 
+			};
+
+			if (selfTextLength > 20) {
+				element.addClass('h-2'); 
+			};
+
+			if (selfTextLength > 50) {
+				element.addClass('w-2'); 
+			};
+
+			if (titleLength > 10) {
+				element.addClass('w-2'); 
+			};
+
+			if (titleLength > 20) {
+				element.addClass('h-2'); 
+			};
+        };
 	});
 
 	angular.module('ng').filter('cut', function () {
