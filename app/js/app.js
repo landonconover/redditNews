@@ -42,13 +42,19 @@
 	app.controller('RedditController', ['$http', '$scope', '$timeout', 'getRedditData', function($http, $scope, $timeout, getRedditData){
 		// var redditData = this;
 
-		$scope.getNextPosts = function(){
+		$scope.getNextPosts = function(lastId){
 
-			console.log("this is awesome");
+			getRedditData.frontPage('25', $scope.lastItemId).then(function(d) {
+			    $scope.redditData = d.data.data.children;
+			    console.log('THIS IS FROM THE SERVICE');
+			    console.log(d);
+
+			    $scope.lastItemId = d.data.data.after;
+			  });
 		};
 
 
-		getRedditData.frontPage('100').then(function(d) {
+		getRedditData.frontPage('25').then(function(d) {
 		    $scope.redditData = d.data.data.children;
 		    console.log('THIS IS FROM THE SERVICE');
 		    console.log(d);
