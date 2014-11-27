@@ -123,6 +123,8 @@ body { font-family: sans-serif; }
       <!-- </div> -->
     </div>    
 
+        <button ng-click="getNextPosts($scope.lastItemId)">Next Posts</button>
+
     <div class="packery js-packery" id="gridContainer" data-packery-options='{ "columnWidth": ".grid-sizer", "rowHeight": ".grid-sizer", "itemSelector": ".myItem" }'>
     
 
@@ -160,7 +162,7 @@ body { font-family: sans-serif; }
 
     </div> 
 
-    <button ng-click="getNextPosts($scope.lastItemId)">Next Posts</button>
+
 
   </body>
 </html>
