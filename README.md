@@ -1,4 +1,4 @@
-#Reddit News - Happy Thanksgiving. 
+#Reddit News
 My super cool app that is used as a personal project for DGM RIA (Rich Internet Apps)
 
 ##Summary
