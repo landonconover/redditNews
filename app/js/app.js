@@ -10,6 +10,7 @@
 	app.factory('getRedditData', ['$http', function($http) {
 
 		return {
+			//get the front page posts. How many and The after ID if you want to limit
 		    frontPage: function(limit, after) {
 
 		    	var getURL = 'http://www.reddit.com/.json?limit='+limit;
@@ -40,8 +41,8 @@
   }]);
 
 	app.controller('RedditController', ['$http', '$scope', '$timeout', 'getRedditData', function($http, $scope, $timeout, getRedditData){
-		// var redditData = this;
 
+		// This runs when you press the next posts button
 		$scope.getNextPosts = function(lastId){
 
 			getRedditData.frontPage('25', $scope.lastItemId).then(function(d) {
@@ -53,22 +54,25 @@
 			  });
 		};
 
-
+		//get data for inital page load
 		getRedditData.frontPage('25').then(function(d) {
 		    $scope.redditData = d.data.data.children;
 		    console.log('THIS IS FROM THE SERVICE');
 		    console.log(d);
 
+		    //set last item id so we can get the next posts
 		    $scope.lastItemId = d.data.data.after;
 		  });
 
+		// run this function when the ng-repeat is done.
 		 $scope.layoutDone = function() {
             // $('a[data-toggle="tooltip"]').tooltip(); // NOT CORRECT!
 
+            // angular is dumb and it breaks without the 0ms timeout
             $timeout(function() { 
 
             	var container = document.querySelector('#gridContainer');
-            	
+            	//run pckry
             	var pckry = new Packery( container, {
             	  // options
             	  itemSelector: '.myItem'
@@ -80,11 +84,13 @@
 
 	}]); //end controller
 
+	//this is a directive to watch the ng-repeat when it is done run the layoutDone() function
 	app.directive('newsPack', function() {
 	    return function(scope, element, attrs) {
 
 
             if (scope.$last) { // all are rendered
+            	//run the function found in this directive. NOTE: It is not using the naitve eval() but it still feels dirty
                 scope.$eval(attrs.newsPack);
             }
         };

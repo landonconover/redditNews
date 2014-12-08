@@ -144,9 +144,10 @@ body { font-family: sans-serif; }
             </a>
             <div class="">
               <h4 class="" ><a target="_blank" ng-href="{{obj.data.url}}">{{obj.data.title}} - {{obj.data.ups}}</a></h4>
-              <span am-time-ago="obj.data.created" am-preprocess="unix"></span>
+              <a ng-href="http://reddit.com{{obj.data.permalink}}">{{obj.data.num_comments}} Comments</a>
+              <br>
+              <span am-time-ago="obj.data.created_utc" am-preprocess="unix"></span>
               <p>{{obj.data.selftext}}</p>
-              
             </div>
           </div>
            <div class="bottom_fade"></div>
