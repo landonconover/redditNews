@@ -15,7 +15,7 @@
 
 		    	var getURL = 'http://www.reddit.com/';
 		    	//if a sub is set
-		    	getURL = sub ? getURL = getURL + 'r/' + sub +'/.json?limit='+limit : getURL + '.json?limit='+limit;
+		    	getURL = sub? getURL = getURL + 'r/' + sub +'/.json?limit='+limit : getURL + '.json?limit='+limit;
 		    	
 		    	//get posts afer a post id. Found at data.after IF after is set.
 		    	getURL = after ? getURL = getURL + '&after=' + after : getURL;
@@ -52,7 +52,6 @@
 
 			getRedditData.frontPage('25', $scope.lastItemId).then(function(d) {
 			    $scope.redditData = d.data.data.children;
-			    console.log('THIS IS FROM THE SERVICE');
 			    console.log(d);
 
 			    $scope.lastItemId = d.data.data.after;
@@ -64,7 +63,13 @@
 
 			console.log(subReddit);
 
-			getRedditData.frontPage('25', $scope.lastItemId, subReddit).then(function(d) {
+			$scope.currentSub = subReddit;
+
+			if (!subReddit) {
+				$scope.currentSub = "";
+			};
+
+			getRedditData.frontPage('25', $scope.lastItemId, $scope.currentSub).then(function(d) {
 			    $scope.redditData = d.data.data.children;
 			    console.log('THIS IS FROM THE SERVICE');
 			    console.log(d);
