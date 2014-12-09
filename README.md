@@ -2,7 +2,7 @@
 My super cool app that is used as a personal project for DGM RIA (Rich Internet Apps)
 
 ##Summary
-I thought it would be cool to browse reddit in the style of a news paper. Ultimately I would like to create this type of experance shown at this website: http://tympanus.net/Development/FlipboardPageLayout/
+I thought it would be cool to browse reddit in the style of a news paper.
 
 ##Technologies Used
 For this project I will be using a modifided MEAN stack.
