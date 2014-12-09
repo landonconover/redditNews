@@ -124,6 +124,7 @@ body { font-family: sans-serif; }
     </div>    
 
         <button ng-click="getNextPosts($scope.lastItemId)">Next Posts</button>
+        <label>/r/</label> <input type="text" id="subReddit" ng-blur="changeSub(subRed)" ng-model='subRed'>{{subRed}}
 
     <div class="packery js-packery" id="gridContainer" data-packery-options='{ "columnWidth": ".grid-sizer", "rowHeight": ".grid-sizer", "itemSelector": ".myItem" }'>
     
@@ -139,8 +140,8 @@ body { font-family: sans-serif; }
         <!-- <div apply-class='{title:"{{obj.data.title}}",ups:{{obj.data.ups}}}'}> -->
         <div apply-class class="myItem" title='{{obj.data.title}}' ups="{{obj.data.ups}}" selfText="{{obj.data.selftext}}">
           <div class="media" >
-            <a class="pull-left" ng-href="{{obj.data.url}}">
-              <img class="media-object img-thumbnail thumbNail" ng-show="obj.data.thumbnail" ng-srcset="{{obj.data.thumbnail}}" alt="Kitty">
+            <a class="pull-left" ng-href="{{obj.data.url}}" ng-show="obj.data.thumbnail">
+              <img class="media-object img-thumbnail thumbNail" ng-srcset="{{obj.data.thumbnail}}" alt="Img">
             </a>
             <div class="">
               <h4 class="" ><a target="_blank" ng-href="{{obj.data.url}}">{{obj.data.title}} - {{obj.data.ups}}</a></h4>

@@ -11,11 +11,16 @@
 
 		return {
 			//get the front page posts. How many and The after ID if you want to limit
-		    frontPage: function(limit, after) {
+		    frontPage: function(limit, after, sub) {
 
-		    	var getURL = 'http://www.reddit.com/.json?limit='+limit;
+		    	var getURL = 'http://www.reddit.com/';
+		    	//if a sub is set
+		    	getURL = sub ? getURL = getURL + 'r/' + sub +'/.json?limit='+limit : getURL + '.json?limit='+limit;
+		    	
 		    	//get posts afer a post id. Found at data.after IF after is set.
 		    	getURL = after ? getURL = getURL + '&after=' + after : getURL;
+		    	
+		    	console.log(getURL);
 
 		      return $http.get(getURL);  //1. this returns promise
 		    }
@@ -54,6 +59,20 @@
 			  });
 		};
 
+		// This runs when you press the next posts button
+		$scope.changeSub = function(subReddit){
+
+			console.log(subReddit);
+
+			getRedditData.frontPage('25', $scope.lastItemId, subReddit).then(function(d) {
+			    $scope.redditData = d.data.data.children;
+			    console.log('THIS IS FROM THE SERVICE');
+			    console.log(d);
+
+			    $scope.lastItemId = d.data.data.after;
+			  });
+		};
+
 		//get data for inital page load
 		getRedditData.frontPage('25').then(function(d) {
 		    $scope.redditData = d.data.data.children;
@@ -80,6 +99,8 @@
 			}, 0); // wait...
 
         };
+
+
 
 
 	}]); //end controller
